@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false #true? ?? ???? ?????? ????.
+        git:
+          uri: https://github.com/huray-nhw/config-repo.git
+          default-label: main
+          username: hy.nam
+          password: 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
+    consul:
+      discovery:
+        healthCheckPath: /actuator/health
+        register-health-check: off
+management:
+  endpoints:
+    web:
+      base-path: "/admin"
+      exposure:
+        include: "*"
+#      show-values: ALWAYS
+logging:
+  level:
+    root: info
+    web: debug
+    org.springframework.cloud: DEBUG
+
+server:
+  port: 8888
+
+encrypt:
+  key: mysecret
+

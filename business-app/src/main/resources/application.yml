@@ -1,0 +1,44 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: business-app1
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      fail-fast: false #true? ??? ?????? ?? ??
+      username: user
+      password: password
+      discovery:
+        enabled: true
+        serviceId: config-server
+    consul:
+      discovery:
+        healthCheckPath: /actuator/health
+        register-health-check: off
+management:
+  endpoints:
+    web:
+      base-path: "/admin"
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      post:
+        enabled: false
+      show-values: ALWAYS
+
+foo: local-foo
+test: local-test
+
+logging:
+  level:
+    root: info
+    web: debug
+
+server:
+  port: 8080
+
+encrypt:
+  key: mysecret
