@@ -22,3 +22,15 @@ consul 설치: service registry 역할
   - 종료: `consul leave`
 - config server 실행
 - business-app, auth, gateway 실행
+
+
+### 테스트 방법
+1. auth서버를 실행시키면 dummy jwt를 콘솔에 출력해준다.
+
+`dummy JWT is = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VySWQiLCJpYXQiOjE2NzYwMDY0ODEsImV4cCI6MTY3NjAxMDA4MX0.BXpR8AiarZD9LdUTO9FXbt1fNH-TlE1MbpVrDTQfdNA
+`
+
+2. gateway에 등록된 엔드포인트를 호출한다
+
+```curl -H 'Authorization: Bearer {TOKEN}' 'localhost:80/need-auth'
+```
