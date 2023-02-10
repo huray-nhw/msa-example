@@ -33,3 +33,6 @@ consul 설치: service registry 역할
 2. gateway에 등록된 엔드포인트를 호출한다
 
 ``` curl -H 'Authorization: Bearer {TOKEN}' 'localhost:80/need-auth' ```
+
+<img width="1647" alt="image" src="https://user-images.githubusercontent.com/119831160/218009582-7ec19369-a06f-4134-ad00-004aec393025.png">
+
