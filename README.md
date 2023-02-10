@@ -11,7 +11,8 @@ consul(service registry) 설치
 * https://developer.hashicorp.com/consul/downloads
 
 
-각 서버에는 service discovery client의 의존성이 포함되어있고, 클라이언트 설정이 yml에 되어있다
+각 클라이언트(모듈)에는 service discovery client의 의존성이 포함되어있고,  
+consul서버에 클라이언트를 등록하는 세팅값이 app설정파일(application.yml)에 적용되어 있다.
 
 ### 실행 순서
 - consul agent 실행 
