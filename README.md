@@ -1,10 +1,13 @@
 # MSA example
 
-### 멀티모듈 구성서버
+### 멀티모듈을 구성하는 어플리케이션들
+> 편의상 멀티모듈로 구성하였으며 각 모듈을 서로 의존하지는 않는다. 실행시에는 각각 실행시키면 된다
+
 - config
 - gateway
 - auth
 - business-app
+
 
 ### 선행 작업
 consul(service registry) 설치
