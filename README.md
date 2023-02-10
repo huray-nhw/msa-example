@@ -32,5 +32,4 @@ consul 설치: service registry 역할
 
 2. gateway에 등록된 엔드포인트를 호출한다
 
-```curl -H 'Authorization: Bearer {TOKEN}' 'localhost:80/need-auth'
-```
+``` curl -H 'Authorization: Bearer {TOKEN}' 'localhost:80/need-auth' ```
