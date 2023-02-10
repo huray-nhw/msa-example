@@ -19,8 +19,12 @@ consul 설치: service registry 역할
 ### 실행 순서
 1. consul agent 실행 (기본포트: 8500)
   - 개발모드로 실행: `consul agent -data-dir=tmp/consul -dev` (종료 하려면: `consul leave`)
-2. config-server, business-app 실행 
-3. gateway, auth 실행
+2. config-server, business-app 서버 구동
+3. gateway, auth 서버 구동
+
+### gateway의 라우터에 등록된 business-app
+gateway 라우터에 business-app의 엔드포엔트가 등록되어 있고, 호출될 때 선처리 과정으로 jwt를 검증(auth서버담당)을 한 뒤 정상이면 대상 엔드포인트를 호출하게 된다.
+(application.yml 참고)
 
 
 ### 테스트 방법
