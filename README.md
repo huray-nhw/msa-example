@@ -15,8 +15,7 @@ consul(service registry) 설치
 
 ### 실행 순서
 - consul agent 실행 
- - 개발모드로 실행 > `consul agent -data-dir=tmp/consul -dev` 
- - 종료 
- > consul leave
+ - 개발모드로 실행: `consul agent -data-dir=tmp/consul -dev` 
+ - 종료: `consul leave`
 - config 실행
 - business-app, auth, gateway 실행
