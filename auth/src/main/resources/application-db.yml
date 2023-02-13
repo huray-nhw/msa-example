@@ -4,12 +4,18 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
-
-  sql:
-    init:
-      schema-locations: classpath:h2/schema.sql
-#      data-locations: classpath:h2/data.sql
-      mode: always
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create
+#  sql:
+#    init:
+#      schema-locations: classpath:h2/schema.sql
+#      data-locations: classpath:h2/import.sql
+#      mode: always
   h2:
     console:
       settings:
