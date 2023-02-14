@@ -7,7 +7,7 @@ spring:
     import: "optional:configserver:"
   cloud:
     config:
-      fail-fast: false #true? ??? ?????? ?? ??
+      fail-fast: true #true로 할경우 config server와 통신실패시 바로 종료
       username: user
       password: password
       discovery:
@@ -20,7 +20,7 @@ spring:
 management:
   endpoints:
     web:
-      base-path: "/admin"
+      base-path: "/actuator"
       exposure:
         include: "*"
   endpoint:

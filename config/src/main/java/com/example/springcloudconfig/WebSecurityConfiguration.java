@@ -19,7 +19,7 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/encrypt/**").authenticated()
                         .requestMatchers("/decrypt/**").authenticated()
                         .anyRequest().authenticated()

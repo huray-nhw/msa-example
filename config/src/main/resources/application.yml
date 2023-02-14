@@ -1,16 +1,21 @@
 spring:
   application:
     name: config-server
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     config:
       server:
         encrypt:
-          enabled: false #true? ?? ???? ?????? ????.
+          enabled: false #true로 할때 암호값이 복호화 되어서 보여진다
         git:
-          uri: https://github.com/huray-nhw/config-repo.git
+          uri: https://github.com/huray-nhw/config-repo-public.git
           default-label: main
-          username: hy.nam
-          password: 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
+#          username: hy.nam
+#          password: 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
     consul:
       discovery:
         healthCheckPath: /actuator/health
@@ -18,9 +23,9 @@ spring:
 management:
   endpoints:
     web:
-      base-path: "/admin"
+      base-path: "/actuator"
       exposure:
-        include: "*"
+        include: "bus-refresh"
 #      show-values: ALWAYS
 logging:
   level:
