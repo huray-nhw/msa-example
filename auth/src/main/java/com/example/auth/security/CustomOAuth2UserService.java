@@ -60,7 +60,7 @@ class OAuth2Attribute {
     static OAuth2Attribute of(String provider, String attributeKey,
                               Map<String, Object> attributes) {
         switch (provider) {
-            case "google":
+            case "google-web", "google-app":
                 return ofGoogle(attributeKey, attributes);
             case "kakao":
                 return ofKakao("email", attributes);

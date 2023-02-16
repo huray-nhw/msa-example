@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+this is appLoginComplete
+<!--<span th:text="${token}">this is token</span>-->
+</body>
+<script th:inline="javascript">
+    const token = [[${token}]];
+    console.log(token);
+</script>
+<script>
+    //custom URL scheme
+/*    const data = {
+        access_token: 'access1',
+        refresh_token: 'refresh1'
+    };
+    window.location.assign(`telex-protocol://?token=${data.access_token}&refresh_token=${data.refresh_token}`);*/
+</script>
+</html>

@@ -4,6 +4,7 @@ import com.example.auth.domain.User;
 import com.example.auth.domain.UserDetail;
 import com.example.auth.service.UserService;
 import com.google.gson.JsonObject;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,12 +19,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import static com.example.auth.security.FormAuthenticationSuccessHandler.tokenResponse;
 
@@ -52,6 +56,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests(
                         authorize -> authorize
+                                .requestMatchers("/hello/**").permitAll()
+                                .requestMatchers("/userAgent/**").permitAll()
                                 .requestMatchers("/validateToken/**").permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
                                 .requestMatchers("/actuator/**").permitAll()
@@ -82,21 +88,59 @@ class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessH
 
     private final UserService userService;
 
+    RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         System.out.println("====== this is oauth2 onAuthenticationSuccess ========");
 
+        String userAgent = request.getHeader("User-Agent");
+        System.out.println("userAgent = " + userAgent);
+
+        String requestURI = request.getRequestURI();
+        System.out.println("requestURI = " + requestURI);
+
         //회원가입 또는 로그인
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         User user = userService.saveOrUpdateOauth2User(oAuth2User);
 
-        //create our jwt
+        //create our jwt/ref
         String token = JwtManager.createToken(user.getId().toString());
 
-        //send Response
-        //todo 로그인 폼 헤더값에 토큰을 주는건?
-        tokenResponse(response, token);
+//        tokenResponse(response, token);
+        //분기 처리 후
+        String[] split = requestURI.split("/");
+        String lastOne = split[split.length - 1];
+        boolean app = lastOne.contains("app");
+        //웹으로 보내기
+        //앱으로 보내기
+        if (app) {
+            this.forwardToAppLoginComplete(request, response, token);
+        }
+        else{
+            this.handle(request, response, authentication);
+        }
+        super.clearAuthenticationAttributes(request);
+    }
+
+
+    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException, ServletException {
+        String targetUrl = "/";
+
+        if (response.isCommitted()) {
+            super.logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
+        } else {
+            redirectStrategy.sendRedirect(request, response, targetUrl);
+        }
+    }
+
+    protected void forwardToAppLoginComplete(HttpServletRequest request, HttpServletResponse response, String token)
+            throws IOException, ServletException {
+        String targetUrl = "/appLoginComplete?token=" + token;
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(targetUrl);
+        requestDispatcher.forward(request, response);
     }
 }
 
@@ -113,7 +157,6 @@ class FormAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     public static void tokenResponse(HttpServletResponse response, String token) {
         try (PrintWriter writer = response.getWriter()) {
-
             JsonObject json = new JsonObject();
             json.addProperty("accessToken", token);
             json.addProperty("refreshToken", "QAWSEDRF123");

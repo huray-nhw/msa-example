@@ -3,11 +3,34 @@ spring:
     oauth2:
       client:
         registration:
-          google:
+          google-web:
             client-id: 733339714836-48kn30saeoopdpsf5faocq1icjfg11fl.apps.googleusercontent.com
             client-secret: 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
-            client-name: oauth2-app-dev
-            redirect-uri: http://localhost:9999/login/oauth2/code/google
+            client-name: google-web-dev
+            redirect-uri: https://b53e-211-254-135-226.jp.ngrok.io/login/oauth2/code/google-web
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_basic
             scope: profile,email
+          google-app:
+            client-id: 733339714836-48kn30saeoopdpsf5faocq1icjfg11fl.apps.googleusercontent.com
+            client-secret: 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
+            client-name: google-app-dev
+            redirect-uri: https://b53e-211-254-135-226.jp.ngrok.io/login/oauth2/code/google-app
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_basic
+            scope: profile,email
+        provider:
+          google-web:
+            authorization_uri: https://accounts.google.com/o/oauth2/v2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user_name_attribute: sub
+          google-app:
+            authorization_uri: https://accounts.google.com/o/oauth2/v2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user_name_attribute: sub
+https://b53e-211-254-135-226:
+  jp:
+    ngrok:
+      io/login/oauth2/code/google-web:

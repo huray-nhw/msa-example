@@ -1,14 +1,14 @@
 package com.example.auth.controller;
 
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import static com.example.auth.security.JwtManager.secretKey;
 
@@ -16,14 +16,6 @@ import static com.example.auth.security.JwtManager.secretKey;
 @RestController
 @Slf4j
 public class AuthController {
-
-    @GetMapping("/")
-    public String afterLogin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        OAuth2User details = (OAuth2User) authentication.getPrincipal();
-
-        return "username is " + authentication.getName();
-    }
 
     @PostMapping("/validateToken")
     public ResponseEntity signIn(@RequestParam String token) {
@@ -35,4 +27,5 @@ public class AuthController {
                 .getSubject();
         return ResponseEntity.ok(null);
     }
+
 }
