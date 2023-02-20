@@ -14,6 +14,8 @@ spring:
         enabled: true
         serviceId: config-server
     consul:
+      host: localhost
+      port: 8500
       discovery:
         healthCheckPath: /actuator/health
         register-health-check: off
