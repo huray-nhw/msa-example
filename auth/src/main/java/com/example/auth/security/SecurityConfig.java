@@ -95,8 +95,8 @@ class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessH
                                         Authentication authentication) throws IOException, ServletException {
         System.out.println("====== this is oauth2 onAuthenticationSuccess ========");
 
-        String userAgent = request.getHeader("User-Agent");
-        System.out.println("userAgent = " + userAgent);
+//        String userAgent = request.getHeader("User-Agent");
+//        System.out.println("userAgent = " + userAgent);
 
         String requestURI = request.getRequestURI();
         System.out.println("requestURI = " + requestURI);
@@ -114,11 +114,11 @@ class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessH
         String lastOne = split[split.length - 1];
         boolean app = lastOne.contains("app");
         //웹으로 보내기
+            //....구현....
         //앱으로 보내기
         if (app) {
             this.forwardToAppLoginComplete(request, response, token);
-        }
-        else{
+        } else {
             this.handle(request, response, authentication);
         }
         super.clearAuthenticationAttributes(request);
